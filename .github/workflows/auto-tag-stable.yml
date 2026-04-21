@@ -1,0 +1,39 @@
+name: Auto Stable Tag
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create stable tag from marketing version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          VERSION="$(sed -n 's/.*MARKETING_VERSION = \([^;]*\);/\1/p' VolFerry.xcodeproj/project.pbxproj | head -n 1 | tr -d '[:space:]')"
+          if [ -z "${VERSION}" ]; then
+            echo "MARKETING_VERSION not found."
+            exit 1
+          fi
+
+          if git rev-parse -q --verify "refs/tags/${VERSION}" >/dev/null; then
+            echo "Tag ${VERSION} already exists, skip."
+            exit 0
+          fi
+
+          echo "Create stable tag: ${VERSION}"
+          git tag -a "${VERSION}" -m "Release ${VERSION}"
+          git push origin "${VERSION}"
