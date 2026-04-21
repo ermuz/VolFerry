@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   tag:
@@ -20,6 +21,7 @@ jobs:
 
       - name: Create pre-release tag from branch
         env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
@@ -64,3 +66,7 @@ jobs:
 
           git tag -a "${TAG}" -m "Release ${TAG}"
           git push origin "${TAG}"
+          gh api \
+            -X POST \
+            "repos/${{ github.repository }}/actions/workflows/macos-build.yml/dispatches" \
+            -f ref="${TAG}"

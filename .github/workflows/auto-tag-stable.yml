@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   tag:
@@ -22,6 +23,7 @@ jobs:
 
       - name: Validate release merge and create stable tag
         env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
@@ -67,3 +69,7 @@ jobs:
           echo "Create stable tag: ${VERSION} -> ${MERGE_SHA}"
           git tag -a "${VERSION}" "${MERGE_SHA}" -m "Release ${VERSION}"
           git push origin "${VERSION}"
+          gh api \
+            -X POST \
+            "repos/${{ github.repository }}/actions/workflows/macos-build.yml/dispatches" \
+            -f ref="${VERSION}"
