@@ -1,7 +1,9 @@
 name: Auto Stable Tag
 
 on:
-  push:
+  pull_request:
+    types:
+      - closed
     branches:
       - main
 
@@ -10,6 +12,7 @@ permissions:
 
 jobs:
   tag:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -17,11 +20,25 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Create stable tag from marketing version
+      - name: Validate release merge and create stable tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
+
+          HEAD_REF="${{ github.event.pull_request.head.ref }}"
+          MERGE_SHA="${{ github.event.pull_request.merge_commit_sha }}"
+          VERSION_FROM_BRANCH="$(echo "${HEAD_REF}" | sed -n 's|^release/\([0-9]\+\.[0-9]\+\.[0-9]\+\)$|\1|p')"
+
+          if [ -z "${VERSION_FROM_BRANCH}" ]; then
+            echo "Invalid source branch: ${HEAD_REF}. main only accepts merged PRs from release/x.y.z for stable tag creation."
+            exit 1
+          fi
+
+          if [ -z "${MERGE_SHA}" ]; then
+            echo "merge_commit_sha is empty, cannot create deterministic stable tag."
+            exit 1
+          fi
 
           VERSION="$(sed -n 's/.*MARKETING_VERSION = \([^;]*\);/\1/p' VolFerry.xcodeproj/project.pbxproj | head -n 1 | tr -d '[:space:]')"
           if [ -z "${VERSION}" ]; then
@@ -29,11 +46,22 @@ jobs:
             exit 1
           fi
 
-          if git rev-parse -q --verify "refs/tags/${VERSION}" >/dev/null; then
-            echo "Tag ${VERSION} already exists, skip."
-            exit 0
+          if [ "${VERSION}" != "${VERSION_FROM_BRANCH}" ]; then
+            echo "Version mismatch: MARKETING_VERSION=${VERSION}, release branch=${VERSION_FROM_BRANCH}"
+            exit 1
           fi
 
-          echo "Create stable tag: ${VERSION}"
-          git tag -a "${VERSION}" -m "Release ${VERSION}"
+          if git rev-parse -q --verify "refs/tags/${VERSION}" >/dev/null; then
+            EXISTING_SHA="$(git rev-list -n 1 "${VERSION}")"
+            if [ "${EXISTING_SHA}" = "${MERGE_SHA}" ]; then
+              echo "Tag ${VERSION} already points to ${MERGE_SHA}, skip."
+              exit 0
+            fi
+            echo "Tag ${VERSION} already exists on ${EXISTING_SHA}, expected ${MERGE_SHA}."
+            exit 1
+          fi
+
+          git fetch --no-tags origin "${MERGE_SHA}"
+          echo "Create stable tag: ${VERSION} -> ${MERGE_SHA}"
+          git tag -a "${VERSION}" "${MERGE_SHA}" -m "Release ${VERSION}"
           git push origin "${VERSION}"

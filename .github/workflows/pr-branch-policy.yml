@@ -1,0 +1,32 @@
+name: PR Branch Policy
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+
+jobs:
+  validate-merge-direction:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate develop merge target
+        run: |
+          set -euo pipefail
+
+          HEAD_REF="${{ github.head_ref }}"
+          BASE_REF="${{ github.base_ref }}"
+
+          if [[ "${HEAD_REF}" == "develop" || "${HEAD_REF}" == develop/* ]]; then
+            if [[ "${BASE_REF}" != release/* ]]; then
+              echo "Invalid PR direction: ${HEAD_REF} can only merge into release/*, current base is ${BASE_REF}"
+              exit 1
+            fi
+          fi
+
+          if [[ "${BASE_REF}" == "main" ]]; then
+            if [[ "${HEAD_REF}" != release/* ]]; then
+              echo "Invalid PR direction: main can only receive PRs from release/*, current head is ${HEAD_REF}"
+              exit 1
+            fi
+          fi
+
+          echo "Branch policy check passed."

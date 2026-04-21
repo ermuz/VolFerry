@@ -5,6 +5,24 @@
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
+      <PostActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Inject Git Commit Hash"
+               scriptText = "set -e&#10;COMMIT=unknown&#10;if command -v git &gt;/dev/null 2&gt;&amp;1; then&#10;  if git -C &quot;${SRCROOT}&quot; rev-parse --is-inside-work-tree &gt;/dev/null 2&gt;&amp;1; then&#10;    COMMIT=&quot;$(git -C &quot;${SRCROOT}&quot; rev-parse --short=8 HEAD)&quot;&#10;  fi&#10;fi&#10;PLIST=&quot;${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Contents/Info.plist&quot;&#10;/usr/libexec/PlistBuddy -c &quot;Set :VolFerryGitCommit ${COMMIT}&quot; &quot;${PLIST}&quot; 2&gt;/dev/null || /usr/libexec/PlistBuddy -c &quot;Add :VolFerryGitCommit string ${COMMIT}&quot; &quot;${PLIST}&quot;">
+               <EnvironmentBuildable>
+                  <BuildableReference
+                     BuildableIdentifier = "primary"
+                     BlueprintIdentifier = "F10500000000000000000001"
+                     BuildableName = "VolFerry.app"
+                     BlueprintName = "VolFerry"
+                     ReferencedContainer = "container:VolFerry.xcodeproj">
+                  </BuildableReference>
+               </EnvironmentBuildable>
+            </ActionContent>
+         </ExecutionAction>
+      </PostActions>
       <BuildActionEntries>
          <BuildActionEntry
             buildForTesting = "YES"
