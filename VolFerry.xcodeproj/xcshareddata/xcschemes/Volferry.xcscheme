@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F10500000000000000000001"
-               BuildableName = "Volferry.app"
-               BlueprintName = "Volferry"
-               ReferencedContainer = "container:Volferry.xcodeproj">
+               BuildableName = "VolFerry.app"
+               BlueprintName = "VolFerry"
+               ReferencedContainer = "container:VolFerry.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -44,9 +44,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F10500000000000000000001"
-            BuildableName = "Volferry.app"
-            BlueprintName = "Volferry"
-            ReferencedContainer = "container:Volferry.xcodeproj">
+            BuildableName = "VolFerry.app"
+            BlueprintName = "VolFerry"
+            ReferencedContainer = "container:VolFerry.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -61,9 +61,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F10500000000000000000001"
-            BuildableName = "Volferry.app"
-            BlueprintName = "Volferry"
-            ReferencedContainer = "container:Volferry.xcodeproj">
+            BuildableName = "VolFerry.app"
+            BlueprintName = "VolFerry"
+            ReferencedContainer = "container:VolFerry.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

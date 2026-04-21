@@ -1,6 +1,6 @@
-# Volferry（卷渡）
+# VolFerry（卷渡）
 
-Volferry 是一个面向 macOS 的 NTFS 磁盘管理工具，提供：
+VolFerry 是一个面向 macOS 的 NTFS 磁盘管理工具，提供：
 
 - NTFS 分区检测与状态展示
 - NTFS 只读/读写挂载切换
@@ -50,11 +50,11 @@ Volferry 是一个面向 macOS 的 NTFS 磁盘管理工具，提供：
 
 ### 主窗口
 
-![Volferry Main Window](docs/images/main-window.png)
+![VolFerry Main Window](docs/images/main-window.png)
 
 ### 状态栏悬浮窗
 
-![Volferry Status Popover](docs/images/status-popover.png)
+![VolFerry Status Popover](docs/images/status-popover.png)
 
 ---
 
@@ -89,15 +89,15 @@ brew install gromgit/fuse/ntfs-3g-mac
 ### 打开工程
 
 ```bash
-open Volferry.xcodeproj
+open VolFerry.xcodeproj
 ```
 
 ### 命令行构建
 
 ```bash
 xcodebuild \
-  -project "Volferry.xcodeproj" \
-  -scheme "Volferry" \
+  -project "VolFerry.xcodeproj" \
+  -scheme "VolFerry" \
   -configuration Debug \
   -destination "platform=macOS" \
   build

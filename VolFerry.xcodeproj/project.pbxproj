@@ -69,8 +69,8 @@
 		F1020000000000000000000C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F1020000000000000000001E /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F10200000000000000000020 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Resources/Assets.xcassets; sourceTree = "<group>"; };
-		F1020000000000000000000D /* Volferry.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Volferry.entitlements; sourceTree = "<group>"; };
-		F102000000000000000000FF /* Volferry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Volferry.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F1020000000000000000000D /* VolFerry.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VolFerry.entitlements; sourceTree = "<group>"; };
+		F102000000000000000000FF /* VolFerry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VolFerry.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,12 +99,12 @@
 		F10400000000000000000001 = {
 			isa = PBXGroup;
 			children = (
-				F10400000000000000000002 /* Volferry */,
+				F10400000000000000000002 /* VolFerry */,
 				F10400000000000000000003 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		F10400000000000000000002 /* Volferry */ = {
+		F10400000000000000000002 /* VolFerry */ = {
 			isa = PBXGroup;
 			children = (
 				F10400000000000000000004 /* App */,
@@ -116,15 +116,15 @@
 				F10200000000000000000020 /* Assets.xcassets */,
 				F1020000000000000000000C /* Info.plist */,
 				F1020000000000000000001E /* InfoPlist.strings */,
-				F1020000000000000000000D /* Volferry.entitlements */,
+				F1020000000000000000000D /* VolFerry.entitlements */,
 			);
-			path = Volferry;
+			path = VolFerry;
 			sourceTree = "<group>";
 		};
 		F10400000000000000000003 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F102000000000000000000FF /* Volferry.app */,
+				F102000000000000000000FF /* VolFerry.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -201,9 +201,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F10500000000000000000001 /* Volferry */ = {
+		F10500000000000000000001 /* VolFerry */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F10700000000000000000002 /* Build configuration list for PBXNativeTarget "Volferry" */;
+			buildConfigurationList = F10700000000000000000002 /* Build configuration list for PBXNativeTarget "VolFerry" */;
 			buildPhases = (
 				F10600000000000000000001 /* Sources */,
 				F10600000000000000000002 /* Resources */,
@@ -213,9 +213,9 @@
 			);
 			dependencies = (
 			);
-			name = Volferry;
-			productName = Volferry;
-			productReference = F102000000000000000000FF /* Volferry.app */;
+			name = VolFerry;
+			productName = VolFerry;
+			productReference = F102000000000000000000FF /* VolFerry.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -233,7 +233,7 @@
 					};
 				};
 			};
-			buildConfigurationList = F10700000000000000000001 /* Build configuration list for PBXProject "Volferry" */;
+			buildConfigurationList = F10700000000000000000001 /* Build configuration list for PBXProject "VolFerry" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = "zh-Hans";
 			hasScannedForEncodings = 0;
@@ -247,7 +247,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F10500000000000000000001 /* Volferry */,
+				F10500000000000000000001 /* VolFerry */,
 			);
 		};
 /* End PBXProject section */
@@ -412,13 +412,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Volferry/Volferry.entitlements;
+				CODE_SIGN_ENTITLEMENTS = VolFerry/VolFerry.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = Volferry/Info.plist;
+				INFOPLIST_FILE = VolFerry/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -436,13 +436,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Volferry/Volferry.entitlements;
+				CODE_SIGN_ENTITLEMENTS = VolFerry/VolFerry.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = Volferry/Info.plist;
+				INFOPLIST_FILE = VolFerry/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -459,7 +459,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F10700000000000000000001 /* Build configuration list for PBXProject "Volferry" */ = {
+		F10700000000000000000001 /* Build configuration list for PBXProject "VolFerry" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F10900000000000000000001 /* Debug */,
@@ -468,7 +468,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F10700000000000000000002 /* Build configuration list for PBXNativeTarget "Volferry" */ = {
+		F10700000000000000000002 /* Build configuration list for PBXNativeTarget "VolFerry" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F10900000000000000000003 /* Debug */,

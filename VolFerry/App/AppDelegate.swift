@@ -217,8 +217,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @objc func showAbout(_ sender: Any?) {
         NSApp.activate(ignoringOtherApps: true)
         let alert = NSAlert()
+        let version = (Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String) ?? "-"
+        let buildTime: String = {
+            guard let exeURL = Bundle.main.executableURL,
+                  let values = try? exeURL.resourceValues(forKeys: [.contentModificationDateKey]),
+                  let date = values.contentModificationDate else {
+                return "-"
+            }
+            let f = DateFormatter()
+            f.locale = Locale(identifier: "zh_CN")
+            f.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            return f.string(from: date)
+        }()
         alert.messageText = "关于 \(AppBrand.bilingualTitle)"
-        alert.informativeText = "\(AppBrand.bilingualTitle) — macOS NTFS 磁盘管理工具\n支持 NTFS 读写挂载与磁盘格式化\n\n技术栈：ntfs-3g + macFUSE"
+        alert.informativeText = "\(AppBrand.bilingualTitle) — macOS NTFS 磁盘管理工具\n支持 NTFS 读写挂载与磁盘格式化\n\n版本：\(version) (\(buildTime))\n技术栈：ntfs-3g + macFUSE"
         alert.addButton(withTitle: "确定")
         alert.runModal()
     }
