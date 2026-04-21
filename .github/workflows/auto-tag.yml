@@ -1,0 +1,49 @@
+name: Auto Tag
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create alpha tag from marketing version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          if git tag --points-at HEAD | sed '/^\s*$/d' | wc -l | tr -d ' ' | grep -qv '^0$'; then
+            echo "Current commit already has tag(s), skip."
+            exit 0
+          fi
+
+          VERSION="$(sed -n 's/.*MARKETING_VERSION = \([^;]*\);/\1/p' VolFerry.xcodeproj/project.pbxproj | head -n 1 | tr -d '[:space:]')"
+          if [ -z "${VERSION}" ]; then
+            echo "MARKETING_VERSION not found."
+            exit 1
+          fi
+
+          PREFIX="${VERSION}-alpha."
+          LAST="$(git tag -l "${PREFIX}*" | sed -n "s/^${VERSION}-alpha\.\([0-9][0-9]*\)$/\1/p" | sort -n | tail -n 1)"
+          if [ -z "${LAST}" ]; then
+            NEXT=1
+          else
+            NEXT=$((LAST + 1))
+          fi
+
+          TAG="${VERSION}-alpha.${NEXT}"
+          echo "Create tag: ${TAG}"
+
+          git tag -a "${TAG}" -m "Release ${TAG}"
+          git push origin "${TAG}"
