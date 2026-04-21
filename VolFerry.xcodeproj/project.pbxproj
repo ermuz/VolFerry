@@ -95,6 +95,28 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		F10600000000000000000003 /* Inject Git Commit Hash */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Inject Git Commit Hash";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/git-commit-hash.stamp",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\nCOMMIT=unknown\nif command -v git >/dev/null 2>&1; then\n  if git -C \"${SRCROOT}\" rev-parse --is-inside-work-tree >/dev/null 2>&1; then\n    COMMIT=\"$(git -C \"${SRCROOT}\" rev-parse --short=8 HEAD)\"\n  fi\nfi\nPLIST=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n/usr/libexec/PlistBuddy -c \"Set :VolFerryGitCommit ${COMMIT}\" \"${PLIST}\" 2>/dev/null || /usr/libexec/PlistBuddy -c \"Add :VolFerryGitCommit string ${COMMIT}\" \"${PLIST}\"\nmkdir -p \"${DERIVED_FILE_DIR}\"\necho \"${COMMIT}\" > \"${DERIVED_FILE_DIR}/git-commit-hash.stamp\"";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXGroup section */
 		F10400000000000000000001 = {
 			isa = PBXGroup;
@@ -205,6 +227,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F10700000000000000000002 /* Build configuration list for PBXNativeTarget "VolFerry" */;
 			buildPhases = (
+				F10600000000000000000003 /* Inject Git Commit Hash */,
 				F10600000000000000000001 /* Sources */,
 				F10600000000000000000002 /* Resources */,
 				F10300000000000000000001 /* Frameworks */,
