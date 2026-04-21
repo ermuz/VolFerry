@@ -3,7 +3,7 @@ name: Auto Tag
 on:
   push:
     branches:
-      - main
+      - release/*
 
 permissions:
   contents: write
@@ -17,7 +17,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Create alpha tag from marketing version
+      - name: Create alpha tag from release branch
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -28,9 +28,10 @@ jobs:
             exit 0
           fi
 
-          VERSION="$(sed -n 's/.*MARKETING_VERSION = \([^;]*\);/\1/p' VolFerry.xcodeproj/project.pbxproj | head -n 1 | tr -d '[:space:]')"
+          BRANCH="${GITHUB_REF_NAME}"
+          VERSION="$(echo "${BRANCH}" | sed -n 's|^release/\([0-9]\+\.[0-9]\+\.[0-9]\+\)$|\1|p')"
           if [ -z "${VERSION}" ]; then
-            echo "MARKETING_VERSION not found."
+            echo "Branch must match release/x.y.z. current=${BRANCH}"
             exit 1
           fi
 
