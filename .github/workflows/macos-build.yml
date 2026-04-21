@@ -45,19 +45,26 @@ jobs:
             echo "VolFerry.app not found in DerivedData"
             exit 1
           fi
+          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            BUILD_LABEL="${GITHUB_REF_NAME}"
+          else
+            BUILD_LABEL="${GITHUB_REF_NAME}-$(git rev-parse --short=8 HEAD)"
+          fi
+          ZIP_NAME="VolFerry-${BUILD_LABEL}-macos.zip"
+          echo "ZIP_NAME=${ZIP_NAME}" >> "$GITHUB_ENV"
           mkdir -p dist
-          ditto -c -k --sequesterRsrc --keepParent "$APP_PATH" "dist/VolFerry-macos.zip"
+          ditto -c -k --sequesterRsrc --keepParent "$APP_PATH" "dist/${ZIP_NAME}"
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: VolFerry-macos
-          path: dist/VolFerry-macos.zip
+          name: ${{ env.ZIP_NAME }}
+          path: dist/${{ env.ZIP_NAME }}
           if-no-files-found: error
 
       - name: Upload Release Asset
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/VolFerry-macos.zip
+          files: dist/${{ env.ZIP_NAME }}
           fail_on_unmatched_files: true
