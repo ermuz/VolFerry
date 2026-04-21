@@ -1,0 +1,4 @@
+/* Localized Info.plist keys — English */
+"CFBundleDisplayName" = "VolFerry";
+"CFBundleName" = "VolFerry";
+"NSHumanReadableCopyright" = "Copyright © 2026 VolFerry. All rights reserved.";
