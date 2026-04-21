@@ -11,6 +11,9 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: macos-14
@@ -57,3 +60,4 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: dist/VolFerry-macos.zip
+          fail_on_unmatched_files: true
