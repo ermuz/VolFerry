@@ -25,6 +25,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           HEAD_REF="${{ github.event.pull_request.head.ref }}"
           MERGE_SHA="${{ github.event.pull_request.merge_commit_sha }}"

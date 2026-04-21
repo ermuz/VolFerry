@@ -23,6 +23,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           if git tag --points-at HEAD | sed '/^\s*$/d' | wc -l | tr -d ' ' | grep -qv '^0$'; then
             echo "Current commit already has tag(s), skip."
